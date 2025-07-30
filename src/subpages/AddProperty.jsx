@@ -6,6 +6,9 @@ const PostProperty = () => {
   const navigate = useNavigate();
   const pinCodeRegex = /^[1-9][0-9]{0,5}$/; // allow partial match while typing
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10000);
+  const [totalPages, setTotalPages] = useState(0);
 
 
 
@@ -89,21 +92,39 @@ const PostProperty = () => {
   const [amenities, setAmenities] = useState({});
   const [selectedAmenities, setSelectedAmenities] = useState([]);
 
-  useEffect(() => {
-    const fetchAmenities = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/amenities/get`
-        );
-        const data = await response.json();
-        setAmenities(data);
-      } catch (error) {
-        console.error("Error fetching amenities:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchAmenities = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${import.meta.env.VITE_BASE_URL}/api/amenities/get`
+  //       );
+  //       const data = await response.json();
+  //       setAmenities(data);
+  //     } catch (error) {
+  //       console.error("Error fetching amenities:", error);
+  //     }
+  //   };
 
-    fetchAmenities();
-  }, []);
+  //   fetchAmenities();
+  // }, []);
+
+  useEffect(() => {
+  const fetchAmenities = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/amenities/get?page=${page}&size=${size}`
+      );
+      const data = await response.json();
+      setAmenities(data.content);       // data.content holds the list
+      setTotalPages(data.totalPages);   // to support pagination UI
+    } catch (error) {
+      console.error("Error fetching amenities:", error);
+    }
+  };
+
+  fetchAmenities();
+}, [page, size]); // Depend on page or size to refetch
+
 
   const handleAmenityChange = (amenityId) => {
     setSelectedAmenities((prevState) =>

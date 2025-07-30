@@ -11,6 +11,9 @@ const EditProperty = () => {
   const { user } = useContext(AuthContext);
   const { propertyId } = useParams();
   const pinCodeRegex = /^[1-9][0-9]{0,5}$/;
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10000);
+  const [totalPages, setTotalPages] = useState(0);
 
   const [enums, setEnums] = useState({
     propertyCategory: [],
@@ -73,49 +76,59 @@ const EditProperty = () => {
 };
 
   useEffect(() => {
-    const fetchEnums = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/properties/all_enum`);
-        setEnums(response.data);
-      } catch (error) {
-        console.error("Error fetching enums:", error);
-      }
-    };
+  const fetchEnums = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/properties/all_enum`);
+      setEnums(response.data);
+    } catch (error) {
+      console.error("Error fetching enums:", error);
+    }
+  };
 
-    const fetchAmenities = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/amenities/get`);
-        const data = await response.json();
-        setAmenities(data);
-      } catch (error) {
-        console.error("Error fetching amenities:", error);
-      }
-    };
+  const fetchPropertyDetails = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/properties/get/${propertyId}`);
+      const propertyData = response.data;
+      setProperty({
+        ...propertyData,
+        area: propertyData.address?.area || "",
+        state: propertyData.address?.state || "",
+        pincode: propertyData.address?.pinCode || "",
+        selectedAmenities: propertyData.selectedAmenities || [],
+        status: propertyData.status || "",
+      });
+      setPropertyType(propertyData.category || "");
+      setTransactionType(propertyData.propertyFor || "");
+      setSelectedFiles(propertyData.propertyGallery ? propertyData.propertyGallery.split(',') : []);
+    } catch (error) {
+      console.error("Error fetching property details:", error);
+    }
+  };
 
-    const fetchPropertyDetails = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/properties/get/${propertyId}`);
-        const propertyData = response.data;
-        setProperty({
-          ...propertyData,
-          area: propertyData.address?.area || "",
-          state: propertyData.address?.state || "",
-          pincode: propertyData.address?.pinCode || "",
-          selectedAmenities: propertyData.selectedAmenities || [],
-          status: propertyData.status || "",
-        });
-        setPropertyType(propertyData.category || "");
-        setTransactionType(propertyData.propertyFor || "");
-        setSelectedFiles(propertyData.propertyGallery ? propertyData.propertyGallery.split(',') : []);
-      } catch (error) {
-        console.error("Error fetching property details:", error);
-      }
-    };
+  fetchEnums();
+  fetchPropertyDetails();
 
-    fetchEnums();
-    fetchAmenities();
-    fetchPropertyDetails();
-  }, [propertyId]);
+}, [propertyId]);
+
+// Separate useEffect for amenities pagination and fetching
+useEffect(() => {
+  const fetchAmenities = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/amenities/get?page=${page}&size=${size}`
+      );
+      const data = await response.json();
+      setAmenities(data.content);
+      setTotalPages(data.totalPages);
+    } catch (error) {
+      console.error("Error fetching amenities:", error);
+    }
+  };
+
+  fetchAmenities();
+
+}, [page, size]);
+
 
   const handleAmenityChange = (amenityId) => {
     setProperty((prevState) => {
