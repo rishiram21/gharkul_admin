@@ -25,7 +25,7 @@ const AllProperty = () => {
   const fetchProperties = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/properties/get`, {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/properties/getadmin`, {
         params: { page, size, sort: 'propertyId', direction: 'desc' },
       });
       const data = response.data;
