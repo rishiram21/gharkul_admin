@@ -144,6 +144,8 @@ const Subscriber = () => {
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Role</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Posts Used</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Contacts Used</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Requirement Posts Used</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Requirement Contacts Used</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
                 </tr>
               </thead>
@@ -167,6 +169,8 @@ const Subscriber = () => {
                       <td className="px-6 py-4">{subscription.role}</td>
                       <td className="px-6 py-4">{subscription.remainingPostsUsed}</td>
                       <td className="px-6 py-4">{subscription.remainingContactsUsed}</td>
+                      <td className="px-6 py-4">{subscription.remainingPostsRequirementUsed}</td>
+                      <td className="px-6 py-4">{subscription.remainingContactsRequirementUsed}</td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full border ${
                           subscription.status === 'ACTIVE' ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-red-100 text-red-800 border-red-200'

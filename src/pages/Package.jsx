@@ -115,6 +115,8 @@ const Package = () => {
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Post Limit</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Contact Limit</th>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Requirement Post Limit</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Requirement Contact Limit</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Features</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">User Role</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
@@ -136,6 +138,8 @@ const Package = () => {
                       <td className="px-6 py-4">{pkg.status}</td>
                       <td className="px-6 py-4">{pkg.postLimit}</td>
                       <td className="px-6 py-4">{pkg.contactLimit}</td>
+                      <td className="px-6 py-4">{pkg.postRequirementLimit}</td>
+                      <td className="px-6 py-4">{pkg.requirementContactLimit}</td>
                       <td className="px-6 py-4">{pkg.features}</td>
                       <td className="px-6 py-4">{pkg.userRole}</td>
                       <td className="px-6 py-4">

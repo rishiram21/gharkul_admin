@@ -14,6 +14,8 @@ const AddPackage = () => {
     status: 'ACTIVE',
     postLimit: '',
     contactLimit: '',
+    postRequirementLimit: '',
+    requirementContactLimit: '',
     userRole: 'BROKER',
     features: '', // New field
   });
@@ -120,6 +122,28 @@ const AddPackage = () => {
               type="number"
               name="contactLimit"
               value={formData.contactLimit}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Requirement Post Limit</label>
+            <input
+              type="number"
+              name="postRequirementLimit"
+              value={formData.postRequirementLimit}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Requirement Contact Limit</label>
+            <input
+              type="number"
+              name="requirementContactLimit"
+              value={formData.requirementContactLimit}
               onChange={handleChange}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
